@@ -140,6 +140,31 @@ namespace tensor {
     }
 
 
+    template<Arithmetic T>
+    T find_max(int length, T * values){
+        T maxv = (T) INT_MIN;
+        for(int i = 0; i < length; ++i){
+            if(maxv < values[i]){
+                maxv = values[i];
+            }
+        }
+        return maxv;
+    }
+
+
+    template<Arithmetic T, Arithmetic S>
+    void fill(S value, Tensor<T>& t){
+        T * tc = t.getCoeffs();
+        for(int i = 0; i < t.getLength(); ++i){
+            tc[i] = (T) value;
+        }
+    }
+
+};
+
+// Tests
+namespace tensor {
+
     void test_mul(){
         Tensor<float> a = {
             {1, 2, 3},

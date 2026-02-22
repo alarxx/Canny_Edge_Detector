@@ -39,13 +39,16 @@ int main(){
     // 2. Image Derivarive
     Tensor sobel = tensor::sobel_operator(blurred);
 
-    // 3. Non-Maximum Suppression
+    // 3. Non-Maximum Suppression (NMS)
+    Tensor nms = tensor::non_max_suppression(sobel);
+
     // 4. Double Thresholding
     // 5. Hysterisis
 
     tensor::imshow(t);
     tensor::imshow(blurred);
     tensor::imshow(sobel);
+    tensor::imshow(nms);
 
     return 0;
 }

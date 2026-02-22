@@ -6,6 +6,7 @@
 #include <climits>
 
 #include "TensorX/Tensor.hpp"
+#include "ops.hpp"
 
 
 namespace tensor {
@@ -31,16 +32,6 @@ namespace tensor {
         return result;
     }
 
-    template<Arithmetic T>
-    T max(int length, T * values){
-        T maxv = (T) INT_MIN;
-        for(int i = 0; i < length; ++i){
-            if(maxv < values[i]){
-                maxv = values[i];
-            }
-        }
-        return maxv;
-    }
 
     template<Arithmetic T>
     Tensor<T> sobel_operator(Tensor<T>& image){
@@ -75,9 +66,39 @@ namespace tensor {
         }
 
         // normalization
-        float maxv = max(mag.getLength(), mag.getCoeffs());
+        float maxv = find_max(mag.getLength(), mag.getCoeffs());
         Tensor out = mul(255/maxv, mag);
 
+        return out;
+    }
+
+
+    template<Arithmetic T>
+    Tensor<T> non_max_suppression(Tensor<T>& image){
+        int H = image.getDims()[0];
+        int W = image.getDims()[1];
+
+        Tensor<T> out(H, W);
+        fill(0, out);
+
+        for(int r = 1; r < H - 1; ++r){ // Don't count image boundaries
+            for(int c = 1; c < W - 1; ++c){
+
+                T center = image.get(r, c);
+
+                bool keep_h = (center >= image.get(r, c - 1) && center >= image.get(r, c + 1));
+                bool keep_v = (center >= image.get(r - 1, c) && center >= image.get(r + 1, c));
+                bool keep_d1 = (center >= image.get(r - 1, c - 1) && center >= image.get(r + 1, c + 1));
+                bool keep_d2 = (center >= image.get(r - 1, c + 1) && center >= image.get(r + 1, c - 1)); // /
+
+                if(keep_h || keep_v || keep_d1 || keep_d2){
+                    out.get(r, c) = center;
+                }
+                else {
+                    out.get(r, c) = (T) 0;
+                }
+            }
+        }
         return out;
     }
 
