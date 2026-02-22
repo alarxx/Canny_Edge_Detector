@@ -3,6 +3,7 @@
 
 #include "TensorX/Tensor.hpp"
 #include "converter.hpp"
+#include "utils.hpp"
 
 #include <opencv2/opencv.hpp>
 
@@ -12,7 +13,6 @@ using tensor::mat2tensor, tensor::tensor2mat;
 // using namespace cv;
 using cv::Mat, cv::imread, cv::IMREAD_GRAYSCALE;
 using cv::namedWindow, cv::WINDOW_AUTOSIZE, cv::imshow, cv::waitKey;
-
 
 int main(){
     std::string imagePath = "./lenna.png";
@@ -30,12 +30,12 @@ int main(){
     // Convert OpenCV Mat to Tensor
     Tensor t = mat2tensor(image);
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
+    std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
 
-    // Convert Tensor to OpenCV Mat
-    Mat image2 = tensor2mat(t);
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
-    imshow("Display Image", image2);
+    // Convert Tensor to OpenCV Mat
+    imshow("Display Image", tensor2mat(t));
 
     waitKey(0);
 
