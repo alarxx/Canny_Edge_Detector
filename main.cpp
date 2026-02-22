@@ -5,17 +5,22 @@
 #include "converter.hpp"
 #include "utils.hpp"
 #include "convolution.hpp"
+#include "ops.hpp"
 
 #include <opencv2/opencv.hpp>
 
 using tensor::Tensor;
 using tensor::mat2tensor, tensor::tensor2mat;
+using tensor::conv;
 
 // using namespace cv;
 using cv::Mat, cv::imread, cv::IMREAD_GRAYSCALE;
 using cv::namedWindow, cv::WINDOW_AUTOSIZE, cv::imshow, cv::waitKey;
 
 int main(){
+    tensor::test_conv();
+    tensor::test_mul();
+
     std::string imagePath = "./lenna.png";
 
     Mat image;
@@ -32,9 +37,34 @@ int main(){
     Tensor t = mat2tensor(image);
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
+    std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
 
     // Convolution
+    Tensor<float> blur5x5 = {
+        {2,  4,  5,  4, 2},
+        {4,  9, 12,  9, 4},
+        {5, 12, 15, 12, 5},
+        {4,  9, 12,  9, 4},
+        {2,  4,  5,  4, 2}
+    };
+    Tensor<float> sobel_x = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+     Tensor<float> nochange = {
+        {0, 0, 0},
+        {0, 1, 0},
+        {0, 0, 0}
+    };
+    Tensor<float> i = {
+        {1, 2, 3, 2},
+        {1, 2, 3, 2},
+        {1, 2, 3, 2},
+        {1, 2, 3, 2}
+    };
 
+    Tensor filtered = conv(t, blur5x5);
 
     // Canny
     // 1. Gaussian Filter
@@ -46,7 +76,8 @@ int main(){
     namedWindow("Display Image", WINDOW_AUTOSIZE);
     // Convert Tensor to OpenCV Mat
     imshow("Display Image", tensor2mat(t));
-
+    waitKey(0);
+    imshow("Filtered Image", tensor2mat(filtered));
     waitKey(0);
 
     return 0;
