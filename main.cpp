@@ -20,6 +20,8 @@ using cv::namedWindow, cv::WINDOW_AUTOSIZE, cv::imshow, cv::waitKey;
 int main(){
     tensor::test_conv();
     tensor::test_mul();
+    tensor::test_mul_scalars();
+    tensor::test_scalar_mul();
 
     std::string imagePath = "./lenna.png";
 
@@ -40,31 +42,22 @@ int main(){
     std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
 
     // Convolution
-    Tensor<float> blur5x5 = {
+    Tensor<float> _blur5x5 = {
         {2,  4,  5,  4, 2},
         {4,  9, 12,  9, 4},
         {5, 12, 15, 12, 5},
         {4,  9, 12,  9, 4},
         {2,  4,  5,  4, 2}
     };
-    Tensor<float> sobel_x = {
-        {-1, 0, 1},
-        {-2, 0, 2},
-        {-1, 0, 1}
-    };
-     Tensor<float> nochange = {
-        {0, 0, 0},
-        {0, 1, 0},
-        {0, 0, 0}
-    };
-    Tensor<float> i = {
-        {1, 2, 3, 2},
-        {1, 2, 3, 2},
-        {1, 2, 3, 2},
-        {1, 2, 3, 2}
-    };
+    Tensor<float> blur5x5 = tensor::div(159.0f, _blur5x5);
 
-    Tensor filtered = conv(t, blur5x5);
+    // Tensor<float> sobel_x = {
+    //     {-1, 0, 1},
+    //     {-2, 0, 2},
+    //     {-1, 0, 1}
+    // };
+
+    Tensor filtered = tensor::conv(t, blur5x5);
 
     // Canny
     // 1. Gaussian Filter

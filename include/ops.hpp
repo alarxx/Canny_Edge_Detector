@@ -77,15 +77,28 @@ namespace tensor {
             throw std::runtime_error(opname + ": nullptr coeffs");
         }
 
-        // Scalars
-        if (rank == 0){
-            return tensor::scalar<T>(op(ac[0], bc[0]));;
-        }
-        // Tensors
         Tensor<T> out(rank, ad);
         T * oc = out.getCoeffs();
         for (int i = 0; i < n; ++i){
             oc[i] = op(ac[i], bc[i]);
+        }
+        return out;
+    }
+
+    // Scalar
+    template<Arithmetic T, typename Op>
+    Tensor<T> elementwise(
+        T sc, Tensor<T>& t,
+        Op op, std::string opname = "elementwise"
+    ){
+        // Directly use coeffs
+        T * tc = t.getCoeffs();
+
+        Tensor<T> out(t.getRank(), t.getDims());
+        T * oc = out.getCoeffs();
+
+        for (int i = 0; i < t.getLength(); ++i){
+            oc[i] = op(sc, tc[i]);
         }
         return out;
     }
@@ -108,6 +121,24 @@ namespace tensor {
         return elementwise<T>(a, b, [](T x, T y){ return x - y; }, "sub");
     }
 
+    // Scalar
+    template<Arithmetic T>
+    Tensor<T> mul(T sc, Tensor<T>& t){
+        return elementwise<T>(sc, t, [](T sc, T v){ return sc * v; }, "mul");
+    }
+    template<Arithmetic T>
+    Tensor<T> div(T sc, Tensor<T>& t){
+        return elementwise<T>(sc, t, [](T sc, T v){ return v / sc; }, "div");
+    }
+    template<Arithmetic T>
+    Tensor<T> add(T sc, Tensor<T>& t){
+        return elementwise<T>(sc, t, [](T sc, T v){ return v + sc; }, "add");
+    }
+    template<Arithmetic T>
+    Tensor<T> sub(T sc, Tensor<T>& t){
+        return elementwise<T>(sc, t, [](T sc, T v){ return v - sc; }, "sub");
+    }
+
 
     void test_mul(){
         Tensor<float> a = {
@@ -124,6 +155,30 @@ namespace tensor {
         };
 
         Tensor<float> out = mul(a, b);
+        std::cout << out << std::endl;
+        assert(equal(out, expected) && "mul result is not correct");
+    }
+
+    void test_mul_scalars(){
+        Tensor a = tensor::scalar(6.0f);
+        Tensor b = tensor::scalar(7.0f);
+        Tensor expected = tensor::scalar(42.0f);
+        Tensor out = mul(a, b);
+        std::cout << out << std::endl;
+        assert(equal(out, expected) && "mul result is not correct");
+    }
+
+    void test_scalar_mul(){
+        Tensor<float> a = {
+            {1, 2, 3},
+            {3, 4, 5}
+        };
+        Tensor<float> expected = {
+            {2,  4,  6},
+            {6,  8, 10}
+        };
+
+        Tensor out = mul(2.0f, a);
         std::cout << out << std::endl;
         assert(equal(out, expected) && "mul result is not correct");
     }
