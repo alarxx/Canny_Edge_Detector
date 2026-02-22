@@ -6,6 +6,7 @@
 #include "utils.hpp"
 #include "convolution.hpp"
 #include "ops.hpp"
+#include "image_processing.hpp"
 
 #include <opencv2/opencv.hpp>
 
@@ -42,14 +43,6 @@ int main(){
     std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
 
     // Convolution
-    Tensor<float> _blur5x5 = {
-        {2,  4,  5,  4, 2},
-        {4,  9, 12,  9, 4},
-        {5, 12, 15, 12, 5},
-        {4,  9, 12,  9, 4},
-        {2,  4,  5,  4, 2}
-    };
-    Tensor<float> blur5x5 = tensor::div(159.0f, _blur5x5);
 
     // Tensor<float> sobel_x = {
     //     {-1, 0, 1},
@@ -57,7 +50,7 @@ int main(){
     //     {-1, 0, 1}
     // };
 
-    Tensor filtered = tensor::conv(t, blur5x5);
+    Tensor filtered = tensor::gaussian_blur(t, 2);
 
     // Canny
     // 1. Gaussian Filter
