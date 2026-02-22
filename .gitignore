@@ -1,3 +1,66 @@
+# exclude any entries of build in any nested dir
+**/[Bb][Uu][Ii][Ll][Dd]/**
+# build - either file or dir
+# build/ - only dir, any nested dir e.g. a/build
+# c/build - specifically this dir, not b/c/build
+
+# Ignore OpenCV
+opencv/
+
+
+# C++
+
+
+# cpack
+*.zip
+*.tar.gz
+*.rpm
+*.deb
+*.exe
+*.run
+**/[Dd][Ee][Bb][Uu][Gg]/**
+**/[Rr][Ee][Ll][Ee][Aa][Ss][Ee]/**
+_CPack_Packages/
+
+# Standard Git C++ gitignore
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+# Python
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -182,9 +245,9 @@ cython_debug/
 .abstra/
 
 # Visual Studio Code
-#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
+#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#  and can be added to the global gitignore or merged into this file. However, if you prefer, 
+#  and can be added to the global gitignore or merged into this file. However, if you prefer,
 #  you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 
