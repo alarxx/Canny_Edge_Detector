@@ -1,11 +1,17 @@
 #pragma once
-#ifndef _TENSORCONVERTER_
-#define _TENSORCONVERTER_
+#ifndef _TENSOROPENCVUTILS_
+#define _TENSORIMAGEIO_
 
-#include "TensorX/Tensor.hpp"
+#include <string>
+
 #include <opencv2/opencv.hpp>
 
+#include "TensorX/Tensor.hpp"
+
+
 namespace tensor {
+
+    // Converter
     template<Arithmetic T = float>
     Tensor<T> mat2tensor(const cv::Mat& src){
         if (src.empty()){
@@ -32,6 +38,7 @@ namespace tensor {
         }
     }
 
+    // Converter
     template<Arithmetic T = float>
     cv::Mat tensor2mat(const Tensor<T>& t){
         // 2D Tensor - Grayscale
@@ -52,6 +59,38 @@ namespace tensor {
             throw std::runtime_error("tensor2mat: unsupported image format");
         }
     }
+
+    // Read Image
+    template<Arithmetic T = float>
+    Tensor<T> imread_gray(std::string path){
+        cv::Mat image = cv::imread(path, cv::IMREAD_GRAYSCALE); // IMREAD_COLOR (BGR), IMREAD_UNCHANGED (BGRA)
+        // cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
+        // std::cout << image.size() << "x" << image.channels() << std::endl;
+
+        if (!image.data){
+            throw std::runtime_error("read_gray: No image data");
+        }
+
+        // Convert OpenCV Mat to Tensor
+        Tensor t = mat2tensor(image);
+        // std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
+        // std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
+        // std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
+        return t;
+    }
+
+    // Visualize
+    template<Arithmetic T>
+    void imshow(Tensor<T> t, std::string title = "Display Image"){
+        cv::namedWindow(title, cv::WINDOW_AUTOSIZE);
+        // Convert Tensor to OpenCV Mat
+        cv::imshow(title, tensor2mat(t));
+        cv::waitKey(0);
+    }
+
 };
 
 #endif
+
+
+

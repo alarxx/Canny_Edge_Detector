@@ -4,12 +4,11 @@
 #include <opencv2/opencv.hpp>
 
 #include "TensorX/Tensor.hpp"
-#include "converter.hpp"
 #include "utils.hpp"
 #include "convolution.hpp"
 #include "ops.hpp"
 #include "image_processing.hpp"
-#include "image_io.hpp"
+#include "opencv_utils.hpp"
 
 
 using tensor::Tensor;
@@ -25,7 +24,7 @@ void test(){
 
 
 int main(){
-    Tensor<float> t = tensor::read_gray("./lenna.png");
+    Tensor<float> t = tensor::imread_gray("./lenna.png");
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
     std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
@@ -47,12 +46,10 @@ int main(){
     // 4. Double Thresholding
     // 5. Hysterisis
 
-    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
-    // Convert Tensor to OpenCV Mat
-    cv::imshow("Display Image", tensor2mat(t));
-    cv::waitKey(0);
-    cv::imshow("Filtered Image", tensor2mat(filtered));
-    cv::waitKey(0);
+    tensor::imshow(t);
+    tensor::imshow(filtered);
 
     return 0;
 }
+
+
