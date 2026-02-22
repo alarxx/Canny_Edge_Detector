@@ -1,4 +1,22 @@
+# target [target2 ...]: [prerequisites ...]
+	# [command1
+	#  command2
+	# ........]
+
+# Phony targets are not files
+.PHONY: \
+	run \
+	Tensor-library
+
+help:
+	@echo "The following are some of the valid targets for this Makefile:"
+	@echo "... run  		- Build and Run"
+	@echo "... Tensor-library 	- Build and Install Tensor-library"
+
 run:
 	cmake -S . -B build
 	cmake --build ./build
 	./build/Canny
+
+Tensor-library:
+	cd Tensor-library && make cmake-install

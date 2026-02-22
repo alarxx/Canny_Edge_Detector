@@ -2,25 +2,40 @@
 #include <stdio.h>
 
 #include "TensorX/Tensor.hpp"
+#include "converter.hpp"
 
 #include <opencv2/opencv.hpp>
 
-using namespace cv;
+using tensor::Tensor;
+using tensor::mat2tensor, tensor::tensor2mat;
+
+// using namespace cv;
+using cv::Mat, cv::imread, cv::IMREAD_GRAYSCALE;
+using cv::namedWindow, cv::WINDOW_AUTOSIZE, cv::imshow, cv::waitKey;
+
 
 int main(){
-    std::cout << "Hello, Tensor Library!" << std::endl;
-
     std::string imagePath = "./lenna.png";
 
     Mat image;
-    image = imread(imagePath, IMREAD_COLOR);
+    image = imread(imagePath, IMREAD_GRAYSCALE); // IMREAD_COLOR (BGR), IMREAD_UNCHANGED (BGRA)
+    // cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
+    std::cout << image.size() << "x" << image.channels() << std::endl;
 
     if (!image.data){
         printf("No image data \n");
         return -1;
     }
+
+    // Convert OpenCV Mat to Tensor
+    Tensor t = mat2tensor(image);
+    std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
+
+    // Convert Tensor to OpenCV Mat
+    Mat image2 = tensor2mat(t);
+
     namedWindow("Display Image", WINDOW_AUTOSIZE);
-    imshow("Display Image", image);
+    imshow("Display Image", image2);
 
     waitKey(0);
 

@@ -14,12 +14,14 @@ message(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER_ID}")
 add_executable(${PROJECT_NAME} main.cpp)
 
 
-# Config mode: CONFIG
-find_package(TensorX REQUIRED
-    PATHS "${CMAKE_SOURCE_DIR}/TensorX/build"
-)
-# Dependency links of other targets, be it static.a or shared.so linking libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE TensorX::TensorX)
+# # Config mode: CONFIG
+# find_package(TensorX REQUIRED
+#     PATHS "${CMAKE_SOURCE_DIR}/TensorX/build"
+# )
+# # Dependency links of other targets, be it static.a or shared.so linking libraries
+# target_link_libraries(${PROJECT_NAME} PRIVATE TensorX::TensorX)
+add_subdirectory(Tensor-library)
+target_link_libraries(${PROJECT_NAME} PRIVATE TensorX)
 
 
 find_package(OpenCV REQUIRED)

@@ -5,7 +5,7 @@
 # c/build - specifically this dir, not b/c/build
 
 # Ignore OpenCV
-opencv/
+# opencv/
 
 
 # C++
