@@ -12,6 +12,8 @@ message(STATUS "C++ Compiler: ${CMAKE_CXX_COMPILER_ID}")
 
 # Add the main executable
 add_executable(${PROJECT_NAME} main.cpp)
+# Include paths - add dirs to the list of paths to search for .h include files
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 
 # # Config mode: CONFIG
@@ -27,7 +29,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE TensorX)
 find_package(OpenCV REQUIRED)
 target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS})
-
 
 # Include paths - add dirs to the list of paths to search for .h include files
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_BINARY_DIR}")

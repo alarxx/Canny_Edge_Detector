@@ -4,6 +4,7 @@
 #include "TensorX/Tensor.hpp"
 #include "converter.hpp"
 #include "utils.hpp"
+#include "convolution.hpp"
 
 #include <opencv2/opencv.hpp>
 
@@ -32,6 +33,15 @@ int main(){
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
 
+    // Convolution
+
+
+    // Canny
+    // 1. Gaussian Filter
+    // 2. Image Derivarive
+    // 3. Non-Maximum Suppression
+    // 4. Double Thresholding
+    // 5. Hysterisis
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
     // Convert Tensor to OpenCV Mat
