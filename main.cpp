@@ -1,43 +1,31 @@
 #include <iostream>
 #include <stdio.h>
 
+#include <opencv2/opencv.hpp>
+
 #include "TensorX/Tensor.hpp"
 #include "converter.hpp"
 #include "utils.hpp"
 #include "convolution.hpp"
 #include "ops.hpp"
 #include "image_processing.hpp"
+#include "image_io.hpp"
 
-#include <opencv2/opencv.hpp>
 
 using tensor::Tensor;
 using tensor::mat2tensor, tensor::tensor2mat;
-using tensor::conv;
 
-// using namespace cv;
-using cv::Mat, cv::imread, cv::IMREAD_GRAYSCALE;
-using cv::namedWindow, cv::WINDOW_AUTOSIZE, cv::imshow, cv::waitKey;
 
-int main(){
+void test(){
     tensor::test_conv();
     tensor::test_mul();
     tensor::test_mul_scalars();
     tensor::test_scalar_mul();
+}
 
-    std::string imagePath = "./lenna.png";
 
-    Mat image;
-    image = imread(imagePath, IMREAD_GRAYSCALE); // IMREAD_COLOR (BGR), IMREAD_UNCHANGED (BGRA)
-    // cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
-    std::cout << image.size() << "x" << image.channels() << std::endl;
-
-    if (!image.data){
-        printf("No image data \n");
-        return -1;
-    }
-
-    // Convert OpenCV Mat to Tensor
-    Tensor t = mat2tensor(image);
+int main(){
+    Tensor<float> t = tensor::read_gray("./lenna.png");
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
     std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
@@ -59,12 +47,12 @@ int main(){
     // 4. Double Thresholding
     // 5. Hysterisis
 
-    namedWindow("Display Image", WINDOW_AUTOSIZE);
+    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     // Convert Tensor to OpenCV Mat
-    imshow("Display Image", tensor2mat(t));
-    waitKey(0);
-    imshow("Filtered Image", tensor2mat(filtered));
-    waitKey(0);
+    cv::imshow("Display Image", tensor2mat(t));
+    cv::waitKey(0);
+    cv::imshow("Filtered Image", tensor2mat(filtered));
+    cv::waitKey(0);
 
     return 0;
 }
