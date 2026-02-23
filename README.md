@@ -72,6 +72,7 @@ OpenCV example: [OpenCV with CMake](https://docs.opencv.org/4.x/db/df5/tutorial_
 ----
 
 ## Build and Install Tensor-library
+[Tensor-library](https://github.com/alarxx/Tensor-library)
 
 ```sh
 make Tensor-library
