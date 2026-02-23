@@ -19,7 +19,8 @@ run:
 	./build/Canny
 
 clean:
-	rm -r build
+	rm -rf build
+	rm -rf Tensor-library/build/
 
 Tensor-library:
 	cd Tensor-library && make cmake-install
