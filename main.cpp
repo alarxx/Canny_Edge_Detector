@@ -43,12 +43,15 @@ int main(){
     Tensor nms = tensor::non_max_suppression(sobel);
 
     // 4. Double Thresholding
+    Tensor strongweak = tensor::double_threshold(nms, 20.0f, 80.0f);
+
     // 5. Hysterisis
 
     tensor::imshow(t);
     tensor::imshow(blurred);
     tensor::imshow(sobel);
     tensor::imshow(nms);
+    tensor::imshow(strongweak);
 
     return 0;
 }

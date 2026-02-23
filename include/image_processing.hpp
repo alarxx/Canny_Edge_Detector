@@ -12,7 +12,7 @@
 namespace tensor {
 
     template<Arithmetic T>
-    Tensor<T> gaussian_blur(Tensor<T>& image, int times = 1){
+    Tensor<T> gaussian_blur(const Tensor<T>& image, int times = 1){
         Tensor<float> _blur5x5 = {
             {2,  4,  5,  4, 2},
             {4,  9, 12,  9, 4},
@@ -34,7 +34,7 @@ namespace tensor {
 
 
     template<Arithmetic T>
-    Tensor<T> sobel_operator(Tensor<T>& image){
+    Tensor<T> sobel_operator(const Tensor<T>& image){
         Tensor<float> sobel_x = {
             {-1,  0,  1},
             {-2,  0,  2},
@@ -74,7 +74,7 @@ namespace tensor {
 
 
     template<Arithmetic T>
-    Tensor<T> non_max_suppression(Tensor<T>& image){
+    Tensor<T> non_max_suppression(const Tensor<T>& image){
         int H = image.getDims()[0];
         int W = image.getDims()[1];
 
@@ -93,6 +93,33 @@ namespace tensor {
 
                 if(keep_h || keep_v || keep_d1 || keep_d2){
                     out.get(r, c) = center;
+                }
+                else {
+                    out.get(r, c) = (T) 0;
+                }
+            }
+        }
+        return out;
+    }
+
+
+    template<Arithmetic T>
+    Tensor<T> double_threshold(const Tensor<T>& image, T low, T high, T WEAK = (T) 50, T STRONG = (T) 255){
+        int H = image.getDims()[0];
+        int W = image.getDims()[1];
+
+        Tensor<T> out(H, W);
+        fill(0, out);
+
+        for(int r = 0; r < H; ++r){
+            for(int c = 0; c < W; ++c){
+                T v = image.get(r, c);
+
+                if(v >= high){
+                    out.get(r, c) = STRONG;
+                }
+                else if(v >= low){
+                    out.get(r, c) = WEAK;
                 }
                 else {
                     out.get(r, c) = (T) 0;
