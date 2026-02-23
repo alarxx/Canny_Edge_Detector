@@ -9,41 +9,11 @@
 #include "ops.hpp"
 #include "opencv_utils.hpp"
 #include "image_processing.hpp"
+#include "dev.hpp"
 
 
 using tensor::Tensor;
 using tensor::mat2tensor, tensor::tensor2mat;
-
-
-void custom_canny(){
-    auto start = std::chrono::high_resolution_clock::now();
-
-    // code block
-    Tensor<float> t = tensor::imread_gray("./images/lenna.png");
-    Tensor edges = tensor::canny(t, 30.0f, 80.0f);
-    // tensor::imshow(edges);
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "custom_canny: " << duration_ns.count() << "ns" << std::endl;
-}
-
-void opencv_canny(){
-    auto start = std::chrono::high_resolution_clock::now();
-
-    // OpenCV Canny
-    cv::Mat img = cv::imread("./images/lenna.png", cv::IMREAD_GRAYSCALE);
-    if (img.empty()) return;
-    cv::Mat edges;
-    cv::Canny(img, edges, 100, 200);
-    // cv::imshow("Original", img);
-    // cv::imshow("Canny OpenCV", edges);
-    // cv::waitKey(0);
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    std::cout << "opencv_canny: " << duration_ns.count() << "ns" << std::endl;
-}
 
 
 void test(){
@@ -60,7 +30,8 @@ int main(){
     test();
 
     // Tensor<float> t = tensor::imread_gray("./images/lenna.png");
-    Tensor<float> t = tensor::imread_gray("./images/karis.jpeg");
+    // Tensor<float> t = tensor::imread_gray("./images/karis.jpeg");
+    Tensor<float> t = tensor::imread_gray("./images/wiki.png");
 
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
@@ -71,7 +42,7 @@ int main(){
     // Canny
 
     // 1. Gaussian Filter
-    Tensor blurred = tensor::gaussian_blur(t, 2);
+    Tensor blurred = tensor::gaussian_blur(t, 1);
 
     // 2. Image Derivarive
     Tensor sobel = tensor::sobel_operator(blurred);
@@ -102,6 +73,8 @@ int main(){
     tensor::imshow(strongweak, "Double Threshold");
     tensor::imshow(chained, "Hysterisis");
     // tensor::imshow(tensor::canny(t, 20.0f, 80.0f));
+
+    draw_edge_components(chained);
 
     return 0;
 }
