@@ -1,5 +1,10 @@
 # Canny Edge Detector
 
+274414972ns - Custom (3FPS)
+15684256ns - OpenCV-Python high (64FPS)
+7670081ns - OpenCV-Python low (130FPS)
+6143235ns - OpenCV (162FPS) x44 times faster
+
 ## Git Submodules
 
 ```sh
