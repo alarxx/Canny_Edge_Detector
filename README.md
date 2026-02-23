@@ -12,6 +12,8 @@ Without imread(): <br>
 10'284'509ns - Best Custom x5 <br>
 2'409'686ns - Best OpenCV <br>
 
+![Canny(Lenna)](https://github.com/alarxx/Canny_Edge_Detector/blob/master/images/hysterisis.png)
+
 ## Git Submodules
 
 ```sh
