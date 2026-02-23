@@ -24,7 +24,7 @@ void test(){
 
 
 int main(){
-    Tensor<float> t = tensor::imread_gray("./lenna.png");
+    Tensor<float> t = tensor::imread_gray("./images/lenna.png");
     std::cout << "t: rank(" << t.getRank() << "), size(" << t.getLength() << ")" << std::endl;
     std::cout << "t: dims(" << array2string(t.getRank(), t.getDims()) << ")" << std::endl;
     std::cout << "t: type(" << typeid(typename decltype(t)::type).name() << ")" << std::endl;
