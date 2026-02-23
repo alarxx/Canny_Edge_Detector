@@ -92,4 +92,5 @@ make run
 
 - Wikipedia: https://en.wikipedia.org/wiki/Canny_edge_detector
 - IEEE: https://ieeexplore.ieee.org/document/4767851
+- Computerphile (Youtube) - Canny Edge Detector. https://www.youtube.com/watch?v=sRFM5IEqR2w
 
