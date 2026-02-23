@@ -214,10 +214,10 @@ namespace tensor {
     ){
         // Canny
         // 1. Gaussian Filter
-        Tensor blurred = tensor::gaussian_blur(image, 2);
+        // Tensor blurred = tensor::gaussian_blur(image, 2);
 
         // 2. Image Derivarive
-        Tensor sobel = tensor::sobel_operator(blurred);
+        Tensor sobel = tensor::sobel_operator(image);
 
         // 3. Non-Maximum Suppression (NMS)
         Tensor nms = tensor::non_max_suppression(sobel);
