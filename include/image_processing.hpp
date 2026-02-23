@@ -105,7 +105,10 @@ namespace tensor {
 
 
     template<Arithmetic T>
-    Tensor<T> double_threshold(const Tensor<T>& image, T low, T high, T WEAK = (T) 50, T STRONG = (T) 255){
+    Tensor<T> double_threshold(
+            const Tensor<T>& image,
+            const T low, const T high,
+            const T WEAK = (T) 50, const T STRONG = (T) 255){
         int H = image.getDims()[0];
         int W = image.getDims()[1];
 
@@ -200,6 +203,29 @@ namespace tensor {
         }
 
         return out;
+    }
+
+
+    template<Arithmetic T>
+    Tensor<T> canny(
+        const Tensor<T>& image,
+        const T low, const T high,
+        const T WEAK = (T) 50, const T STRONG = (T) 255
+    ){
+        // Canny
+        // 1. Gaussian Filter
+        Tensor blurred = tensor::gaussian_blur(image, 2);
+
+        // 2. Image Derivarive
+        Tensor sobel = tensor::sobel_operator(blurred);
+
+        // 3. Non-Maximum Suppression (NMS)
+        Tensor nms = tensor::non_max_suppression(sobel);
+
+        // 4-5. Double Thresholding and Hysterisis
+        Tensor chained = tensor::hysterisis(nms, 20.0f, 80.0f);
+
+        return chained;
     }
 
 };

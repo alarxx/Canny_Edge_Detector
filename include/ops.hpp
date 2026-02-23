@@ -5,6 +5,7 @@
 #include "TensorX/Tensor.hpp"
 
 #include <string>
+#include <algorithm>
 #include <cassert>
 
 
@@ -149,6 +150,33 @@ namespace tensor {
             }
         }
         return maxv;
+    }
+
+    template<Arithmetic T>
+    T find_median(int length, T * values){
+        std::vector<T> vec(values, values + length);
+        std::sort(vec.begin(), vec.end());
+        return vec[length / 2];
+    }
+
+    template<Arithmetic T>
+    T find_median(Tensor<T> t){
+        return find_median(t.getLength(), t.getCoeffs());
+    }
+
+
+    template<Arithmetic T>
+    T find_mean(int length, T * values){
+        T sum = (T) 0;
+        for (int i = 0; i < length; ++i) {
+            sum += values[i];
+        }
+        return sum / length;
+    }
+
+    template<Arithmetic T>
+    T find_mean(Tensor<T> t){
+        return find_mean(t.getLength(), t.getCoeffs());
     }
 
 
