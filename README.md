@@ -1,16 +1,16 @@
 # Canny Edge Detector
 
-Full program:
-274'414'972ns - Custom (3FPS) x44
-106'746'999ns - Custom without blurring (9FPS) x17
-14'866'071ns - Custom without blurring -O3 optimization (64FPS) x2.5
-15'684'256ns - OpenCV-Python high (64FPS)
-7'670'081ns - OpenCV-Python low (130FPS)
-6'143'235ns - OpenCV (162FPS)
+Full program: <br>
+274'414'972ns - Custom (3FPS) x44 <br>
+106'746'999ns - Custom without blurring (9FPS) x17 <br>
+14'866'071ns - Custom without blurring -O3 optimization (64FPS) x2.5 <br>
+15'684'256ns - OpenCV-Python high (64FPS) <br>
+7'670'081ns - OpenCV-Python low (130FPS) <br>
+6'143'235ns - OpenCV (162FPS) <br>
 
-Without imread():
-10'284'509ns - Best Custom x5
-2'409'686ns - Best OpenCV
+Without imread(): <br>
+10'284'509ns - Best Custom x5 <br>
+2'409'686ns - Best OpenCV <br>
 
 ## Git Submodules
 
