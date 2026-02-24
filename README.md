@@ -36,7 +36,7 @@ git submodule set-branch -b 4.x opencv
 
 Initialize and update submodules to recorded commits:
 ```sh
-git submodule update --init --recursive
+git submodule update --init --recursive --progress
 ```
 
 Merge updates, fetching new commits:

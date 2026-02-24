@@ -33,7 +33,7 @@ clean:
 	rm -rf Tensor-library/build/
 
 submodules:
-	git submodule update --init --recursive
+	git submodule update --init --recursive --progress
 
 install-tensor-library:
 	cd Tensor-library && make cmake-install
