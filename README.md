@@ -110,6 +110,32 @@ make run
 # ./build/Canny
 ```
 
+
+## Licence
+
+This project is licensed under the terms of [MPL-2.0](https://mozilla.org/MPL/2.0/), which is simple and straightforward to use, allowing this project to be combined and distributed with any proprietary software, even with static linking. If you modify, only the originally covered files must remain under the same MPL-2.0.
+
+License notice:
+```
+SPDX-License-Identifier: MPL-2.0
+--------------------------------
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+If a copy of the MPL was not distributed with this file,
+You can obtain one at https://mozilla.org/MPL/2.0/.
+
+Provided “as is”, without warranty of any kind.
+
+Copyright © 2026 Alar Akilbekov. All rights reserved.
+
+Third party copyrights are property of their respective owners.
+```
+
+---
+
+## Contact
+
+Alar Akilbekov - alar.akilbekov@gmail.com
+
 ---
 
 ## References
