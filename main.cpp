@@ -4,16 +4,18 @@
 #include <opencv2/opencv.hpp>
 
 #include "TensorX/Tensor.hpp"
-#include "utils.hpp"
-#include "convolution.hpp"
-#include "ops.hpp"
-#include "opencv_utils.hpp"
+
+#include "opencv_utils.hpp" // imread_gray, imshow
+
+#include "utils.hpp" // array2string
+#include "convolution.hpp" // conv
+#include "ops.hpp" // find_median, find_mean
 #include "image_processing.hpp"
-#include "dev.hpp"
+#include "dev.hpp" // test, draw_edge_components
 
 
 using tensor::Tensor;
-using tensor::mat2tensor, tensor::tensor2mat;
+
 
 int main(){
     dev::test();
