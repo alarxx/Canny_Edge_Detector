@@ -14,7 +14,14 @@ Without imread(): <br>
 
 ![Canny(Lenna)](https://github.com/alarxx/Canny_Edge_Detector/blob/master/images/steps/hysterisis.png)
 
+
 ## Git Submodules
+
+```sh
+make submodules
+```
+
+### Detailed process on submodules
 
 ```sh
 git submodule add -b c++mappings git@github.com:alarxx/Tensor-library.git
@@ -37,7 +44,18 @@ Merge updates, fetching new commits:
 git submodule update --remote [--recursive]
 ```
 
+## Build and Install OpenCV
+
+```sh
+make install-opencv
+```
+
+[Build and Install OpenCV](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) <br>
+OpenCV example: [OpenCV with CMake](https://docs.opencv.org/4.x/db/df5/tutorial_linux_gcc_cmake.html) <br>
+
 ---
+
+You might want to install the following.
 
 Install Ninja build system:
 ```sh
@@ -52,26 +70,10 @@ apt install -y qtcreator qtbase5-dev qt5-qmake cmake
 
 ---
 
-## Build and Install OpenCV
-
-```sh
-make install-opencv
-```
-
-[Build and Install OpenCV](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) <br>
-OpenCV example: [OpenCV with CMake](https://docs.opencv.org/4.x/db/df5/tutorial_linux_gcc_cmake.html) <br>
-
-----
-
 ## Build and Install Tensor-library
 
 [Tensor-library](https://github.com/alarxx/Tensor-library)
 
-Execute either:
-```sh
-cd Tensor-library && make cmake-install
-```
-or
 ```sh
 make install-tensor-library
 ```
